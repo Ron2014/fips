@@ -18,6 +18,7 @@ include("${FIPS_ROOT_DIR}/cmake/fips_private.cmake")
 include("${FIPS_ROOT_DIR}/cmake/fips_windows.cmake")
 include("${FIPS_ROOT_DIR}/cmake/fips_android.cmake")
 include("${FIPS_ROOT_DIR}/cmake/fips_osx.cmake")
+include("${FIPS_ROOT_DIR}/cmake/fips_unittests.cmake")
 include("${FIPS_ROOT_DIR}/cmake/fips_generators.cmake")
 
 #-------------------------------------------------------------------------------
@@ -25,6 +26,9 @@ include("${FIPS_ROOT_DIR}/cmake/fips_generators.cmake")
 #-------------------------------------------------------------------------------
 option(FIPS_CMAKE_VERBOSE "Verbose messages during cmake runs" OFF)
 option(FIPS_NO_ASSERTS_IN_RELEASE "Remove asserts in release-mode" OFF)
+option(FIPS_UNITTESTS "Enable unit tests" OFF)
+option(FIPS_UNITTESTS_RUN_AFTER_BUILD "Automatically run unit tests after building" OFF)
+option(FIPS_UNITTESTS_HEADLESS "If enabled don't run tests which require a display" OFF)
 option(FIPS_EXCEPTIONS "Enable C++ exceptions" OFF)
 option(FIPS_RTTI "Enable C++ RTTI" OFF)
 option(FIPS_ALLOCATOR_DEBUG "Enable allocator debugging code (slow)" OFF)
@@ -36,6 +40,12 @@ option(FIPS_LINUX_MACH32 "Enable 32-bit code generation on 64-bit Linux host" OF
 option(FIPS_AUTO_IMPORT "Automatically include all modules from imports" ON)
 option(FIPS_CLANG_ADDRESS_SANITIZER "Enable clang address sanitizer" OFF)
 option(FIPS_CLANG_SAVE_OPTIMIZATION_RECORD "Enable clang -fsave-optimization-record option" OFF)
+
+# turn some dependent options on/off
+if (FIPS_UNITTESTS)
+    enable_testing()
+    set(FIPS_EXCEPTIONS ON CACHE BOOL "Enable C++ exceptions" FORCE)
+endif()
 
 
 #-------------------------------------------------------------------------------
