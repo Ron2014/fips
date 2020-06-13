@@ -12,7 +12,7 @@ macro(fips_begin_unittest name)
     if (FIPS_UNITTESTS)
         set(FipsAddFilesEnabled 1)
         # support target_module and Unittest in different folder level.
-        if(${CurTargetName} STREQUAL ${name})
+        if(CurTargetName STREQUAL ${name})
             fips_reset(${CurTargetName}Test)
         else()
             fips_reset(${name}Test)
